@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "Profesores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Profesores</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" method="post">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input type="text" class="form-control" id="nombreEmpleado" placeholder="Nombre" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido parterno</label>
+                                                        <input type="text" class="form-control" id="apellidopEmpleado" placeholder="Apellido paterno" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido materno</label>
+                                                        <input type="text" class="form-control" id="apellidomEmpleado" placeholder="Apellido materno" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>RFC</label>
+                                                        <input type="text" class="form-control" id="rfcEmpleado" placeholder="RFC" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Tipo de trabajador</label>
+                                                        <select class="form-control" id="tipoTrabajadorId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Instituci&oacute;n</label>
+                                                        <select class="form-control" id="institucionId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="button" id="saveemployer" class="btn btn-success mr-2">Actualziar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/Platform/General/GetInstitucion.js"></script>
+        <script src="~/Scripts/Platform/Employer/Getrol.js"></script>
+
+        <script>
+        $(document).ready(function () {
+            var accion;
+            var error;
+            var msj;
+
+            id= @Request.QueryString["id"];
+            var oModel = {
+                "EmployerId": id
+            }
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Employer/ShowUpdate",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json",
+            success: function (data) {
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    $("#nombreEmpleado").val(data[i].nombre);
+                    $("#apellidopEmpleado").val(data[i].apellidop);
+                    $("#apellidomEmpleado").val(data[i].apellidom);
+                    $("#rfcEmpleado").val(data[i].rfc);
+                    var rol = data[i].rolId;
+                    var inst = data[i].institucionId;
+                    $("#tipoTrabajadorId option[value=" + rol + "]").attr("selected", true);
+                    $("#institucionId option[value=" + inst + "]").attr("selected", true);
+
+                }
+
+                error = "Ninguno";
+                msj = "Funcionamiento correcto";
+                accion = "Obtencion de datos para la actualizacion de un empleado";
+                Information(accion, error, msj);
+            },
+            error: function (jqXHR, textStatus, err) {
+                console.log(textStatus);
+                error = err + " " + textStatus + " " + jqXHR;
+                msj = "Administrador revisa el funcionamiento del portal";
+                accion = "Fallo obtencion de datos para actualizar un empleado";
+                Information(accion, error, msj);
+            }
+            });
+        });
+
+
+        $('#saveemployer').click(function () {
+            var accion;
+            var error;
+            var msj;
+
+            var oModel = {
+                "EmployerId":id,
+                "Nombre": $("#nombreEmpleado").val(),
+                "Apellidop": $("#apellidopEmpleado").val(),
+                "Apellidom": $("#apellidomEmpleado").val(),
+                "Rfc": $("#rfcEmpleado").val(),
+                "RolesId": $("#tipoTrabajadorId").attr("selected", true).val(),
+                "InstitucionId": $("#institucionId").attr("selected", true).val()
+            }
+            $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Employer/Update",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json",
+                success: function (data) {
+                    error = "Ninguno";
+                    msj = "Funcionamiento correcto";
+                    accion = "Actualizacion de un empleado";
+                    Information(accion, error, msj);
+
+                    alert("Profesor actualizado correctamente");
+                    window.location.href = "ShowEmployer";
+                    return false;
+
+                },
+                error: function (jqXHR, textStatus, err) {
+                    alert("Ocurrio un error al actualizar");
+                    error = err + " " + textStatus + " " + jqXHR;
+                    msj = "Administrador revisa el funcionamiento del portal";
+                    accion = "Fallo actualizacion de un empleado";
+                    Information(accion, error, msj);
+                }
+            });
+            });
+
+
+            function Information(accion, error, msj) {
+                var oModel = {
+                    "Accion": accion,
+                    "Error": error,
+                    "Msj": msj
+                }
+                $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Binnacle/Info",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json"
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (jqXHR, textStatus, err) {
+                    console.log(textStatus);
+                });
+            }
+
+
+        </script>

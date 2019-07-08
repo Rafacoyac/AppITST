@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Grupos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Grupos</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" method="post">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nombre del grupo</label>
+                                                        <input type="text" class="form-control" id="nombreGrupo" placeholder="Grupo" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" id="saveGroup" class="btn btn-success mr-2">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/Platform/Group/CreateGroup.js"></script>
+        

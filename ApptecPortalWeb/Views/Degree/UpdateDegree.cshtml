@@ -1,0 +1,144 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Grados</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" method="post">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nombre del grado</label>
+                                                        <input type="text" class="form-control" id="nombreGrado" placeholder="Grado" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" id="SaveDegree" class="btn btn-success mr-2">Actualizar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+     <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            var accion;
+            var error;
+            var msj;
+
+            id= @Request.QueryString["id"];
+            var oModel = {
+                "DegreeId": id
+            }
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Degree/ShowUpdate",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json",
+            success: function (data) {
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    $("#nombreGrado").val(data[i].nombre);
+                }
+                error = "Ninguno";
+                msj = "Funcionamiento correcto";
+                accion = "Obtencion de datos para la actualizacion de un grado";
+                Information(accion, error, msj);
+            },
+            error: function (jqXHR, textStatus, err) {
+                console.log(textStatus);
+                error = err + " " + textStatus + " " + jqXHR;
+                msj = "Administrador revisa el funcionamiento del portal";
+                accion = "Fallo obtencion de datos para actualizar un grado";
+                Information(accion, error, msj);
+            }
+            });
+        });
+
+       
+        $('#SaveDegree').click(function () {
+            var accion;
+            var error;
+            var msj;
+
+            var oModel = {
+                "DegreeId": id,
+                "Nombre": $("#nombreGrado").val()
+            }
+            $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Degree/Update",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json",
+                success: function (data) {
+                    error = "Ninguno";
+                    msj = "Funcionamiento correcto";
+                    accion = "Actualizacion de un grado";
+                    Information(accion, error, msj);
+
+                    alert("Grado actualizado correctamente");
+                    window.location.href = "ShowDegree";
+                    return false;
+
+                },
+                error: function (jqXHR, textStatus, err) {
+                    alert("Ocurrio un error al actualizar");
+                    error = err + " " + textStatus + " " + jqXHR;
+                    msj = "Administrador revisa el funcionamiento del portal";
+                    accion = "Fallo actualizacion de un grado";
+                    Information(accion, error, msj);
+                }
+            });
+        });
+
+
+        function Information(accion, error, msj) {
+            var oModel = {
+                "Accion": accion,
+                "Error": error,
+                "Msj": msj
+            }
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Binnacle/Info",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json"
+            }).done(function (response) {
+                console.log(response);
+            }).fail(function (jqXHR, textStatus, err) {
+                console.log(textStatus);
+            });
+        }
+
+
+    </script>

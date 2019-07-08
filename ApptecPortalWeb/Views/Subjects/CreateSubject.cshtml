@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Materias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Materias</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Clave</label>
+                                                        <input type="text" class="form-control" id="claveMateria" placeholder="Clave" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input type="text" class="form-control" id="nombreMateria" placeholder="Nombre" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>N&uacute;mero de cr&eacute;ditos</label>
+                                                        <input type="number" class="form-control" id="creditosMateria" placeholder="Créditos" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Carrera</label>
+                                                        <select class="form-control" id="carreraId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Especialidad</label>
+                                                        <select class="form-control" id="especialidadId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="button" id="saveSubject" class="btn btn-success mr-2">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+            <script type="text/javascript" src="~/Scripts/Platform/Subject/GetCareerSpeciality.js"></script>
+            <script type="text/javascript" src="~/Scripts/Platform/Subject/CreateSubject.js"></script>
+
+
+

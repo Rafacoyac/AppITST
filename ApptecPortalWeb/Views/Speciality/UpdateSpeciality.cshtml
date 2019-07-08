@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "Especialidades";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Especialidades</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nombre de la especialidad</label>
+                                                        <input type="text" class="form-control" id="nombreEspecialidad" placeholder="Nombre" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Institución</label>
+                                                        <select class="form-control" id="institucionId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="button" id="saveSpeciality" class="btn btn-success mr-2">Actualizar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="~/Scripts/Platform/General/GetInstitucion.js"></script>
+        <script>
+        $(document).ready(function () {
+            var accion;
+            var error;
+            var msj;
+
+            id= @Request.QueryString["id"];
+            var oModel = {
+                "SpecialityId": id
+            }
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Speciality/ShowUpdate",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json",
+            success: function (data) {
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    $("#nombreEspecialidad").val(data[i].nombre);
+                    var valor = data[i].institucionId;
+                    $("#institucionId option[value=" + valor + "]").attr("selected", true);
+                }
+
+                error = "Ninguno";
+                msj = "Funcionamiento correcto";
+                accion = "Actualizacion de una especialidad";
+                Information(accion, error, msj);
+            },
+            error: function (jqXHR, textStatus, err) {
+                console.log(textStatus);
+                error = err + " " + textStatus + " " + jqXHR;
+                msj = "Administrador revisa el funcionamiento del portal";
+                accion = "Fallo actualizacion de una especialidad";
+                Information(accion, error, msj);
+            }
+            });
+        });
+
+
+            $('#saveSpeciality').click(function () {
+                var accion;
+                var error;
+                var msj;
+
+            var oModel = {
+                "SpecialityId": id,
+                "Nombre": $("#nombreEspecialidad").val(),
+                "InstitucionId": $("#institucionId").attr("selected", true).val()
+            }
+            $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Speciality/Update",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json",
+                success: function (data) {
+                    error = "Ninguno";
+                    msj = "Funcionamiento correcto";
+                    accion = "Actualizacion de una especialidad";
+                    Information(accion, error, msj);
+
+                    alert("Especialidad actualizada correctamente");
+                    window.location.href = "ShowSpeciality";
+                    return false;
+
+                },
+                error: function (jqXHR, textStatus, err) {
+                    alert("Ocurrio un error al actualizar");
+                    error = err + " " + textStatus + " " + jqXHR;
+                    msj = "Administrador revisa el funcionamiento del portal";
+                    accion = "Fallo actualizacion de una especialidad";
+                    Information(accion, error, msj);
+                }
+            });
+            });
+
+
+            function Information(accion, error, msj) {
+                var oModel = {
+                    "Accion": accion,
+                    "Error": error,
+                    "Msj": msj
+                }
+                $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Binnacle/Info",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json"
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (jqXHR, textStatus, err) {
+                    console.log(textStatus);
+                });
+            }
+
+
+        </script>
+
+
+

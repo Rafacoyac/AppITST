@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Profesores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Profesores</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" method="post">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input type="text" class="form-control" id="nombreEmpleado" placeholder="Nombre" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido parterno</label>
+                                                        <input type="text" class="form-control" id="apellidopEmpleado" placeholder="Apellido paterno" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido materno</label>
+                                                        <input type="text" class="form-control" id="apellidomEmpleado" placeholder="Apellido materno" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>RFC</label>
+                                                        <input type="text" class="form-control" id="rfcEmpleado" placeholder="RFC" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Tipo de trabajador</label>
+                                                        <select class="form-control" id="tipoTrabajadorId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Instituci&oacute;n</label>
+                                                        <select class="form-control" id="institucionId" autocomplete="on"  required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="button" id="employer" class="btn btn-success mr-2">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+    <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/Platform/Employer/CreateEmployer.js"></script>
+    <script src="~/Scripts/Platform/General/GetInstitucion.js"></script>
+    <script src="~/Scripts/Platform/Employer/Getrol.js"></script>
+

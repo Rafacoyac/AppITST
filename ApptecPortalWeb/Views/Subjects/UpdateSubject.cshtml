@@ -1,0 +1,198 @@
+﻿@{
+                /**/
+
+                ViewBag.Title = "Materias";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Materias</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Clave</label>
+                                                        <input type="text" class="form-control" id="claveMateria" placeholder="Clave" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input type="text" class="form-control" id="nombreMateria" placeholder="Nombre" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>N&uacute;mero de cr&eacute;ditos</label>
+                                                        <input type="number" class="form-control" id="creditosMateria" placeholder="Créditos" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Carrera</label>
+                                                        <select class="form-control" id="carreraId" autocomplete="on" required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Especialidad</label>
+                                                        <select class="form-control" id="especialidadId" autocomplete="on" required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="button" id="saveSubject" class="btn btn-success mr-2">Actualizar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+            <script type="text/javascript" src="~/Scripts/Platform/Subject/GetCareerSpeciality.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var accion;
+            var error;
+            var msj;
+
+            id= @Request.QueryString["id"];
+            var oModel = {
+                "SubjectId": id,
+             }
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Subject/ShowUpdate",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json",
+            success: function (data) {
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    $("#claveMateria").val(data[i].clave);
+                    $("#nombreMateria").val(data[i].nombre);
+                    $("#creditosMateria").val(data[i].creditos);
+                    var valor = data[i].carreraId;
+                    var especialidad = data[i].especialidadId;
+                    $("#carreraId option[value=" + valor + "]").attr("selected", true);
+                    $("#especialidadId option[value=" + especialidad + "]").attr("selected", true);
+                }
+                error = "Ninguno";
+                msj = "Funcionamiento correcto";
+                accion = "Obtencion de datos para la actualizacion de una materia";
+                Information(accion, error, msj);
+            },
+            error: function (jqXHR, textStatus, err) {
+                console.log(textStatus);
+                error = err + " " + textStatus + " " + jqXHR;
+                msj = "Administrador revisa el funcionamiento del portal";
+                accion = "Fallo obtencion de datos para actualizar una materia";
+                Information(accion, error, msj);
+            }
+            });
+        });
+
+
+        $('#saveSubject').click(function () {
+            var accion;
+            var error;
+            var msj;
+
+                var oModel = {
+                    "SubjectId": id,
+                    "Clave": $("#claveMateria").val(),
+                    "Nombre": $("#nombreMateria").val(),
+                    "Creditos": $("#creditosMateria").val(),
+                    "CarreraId": $("#carreraId").attr("selected", true).val(),
+                    "EspecialidadId": $("#especialidadId").attr("selected", true).val()
+
+            }
+            $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Subject/Update",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json",
+                success: function (data) {
+                    error = "Ninguno";
+                    msj = "Funcionamiento correcto";
+                    accion = "Actualizacion de una materia";
+                    Information(accion, error, msj);
+
+                    alert("Materia actualizada correctamente");
+                    window.location.href = "ShowSubject";
+                    return false;
+
+                },
+                error: function (jqXHR, textStatus, err) {
+                    alert("Ocurrio un error al actualizar");
+                    error = err + " " + textStatus + " " + jqXHR;
+                    msj = "Administrador revisa el funcionamiento del portal";
+                    accion = "Fallo actualizacion de una materia";
+                    Information(accion, error, msj);
+                }
+            });
+        });
+
+
+        function Information(accion, error, msj) {
+            var oModel = {
+                "Accion": accion,
+                "Error": error,
+                "Msj": msj
+            }
+            $.ajax({
+                 "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Binnacle/Info",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json"
+                    }).done(function (response) {
+                        console.log(response);
+                    }).fail(function (jqXHR, textStatus, err) {
+                        console.log(textStatus);
+                    });
+             }
+
+    </script>
+
+
+
+
+

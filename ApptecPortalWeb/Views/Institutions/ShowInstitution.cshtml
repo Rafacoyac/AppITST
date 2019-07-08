@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Datos institución";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Datos de la instituci&oacute;n</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="forms-sample">
+                                            <table id="tableins" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Direcci&oacute;n</th>
+                                                        <th>Tel&eacute;fono</th>
+                                                        <th>Nivel educativo</th>
+                                                        <th>Director</th>
+                                                        <th>Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+
+
+            $(document).ready(function () {
+                LoadDatatable();
+
+            });
+
+            function LoadDatatable() {
+                var table = $('#tableins').DataTable({
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página.",
+                        "zeroRecords": "Lo sentimos. No se encontraron registros.",
+                        "info": "Mostrando página _PAGE_ de _PAGES_",
+                        "infoEmpty": "No hay registros aún.",
+                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+                        "search": "Búsqueda",
+                        "LoadingRecords": "Cargando ...",
+                        "Processing": "Procesando...",
+                        "SearchPlaceholder": "Comience a teclear...",
+                        "paginate": {
+                            "previous": "Anterior",
+                            "next": "Siguiente",
+                        }
+                    },
+                    "scrollY": 350,
+                    "scrollX": true,
+                    "ajax": {
+                        "method": "POST",
+                        "url": "http://localhost:59538/Api/Institution/Show",
+                        dataSrc: ''
+                    },
+                    "columns": [
+                        {
+                            'aTargets': [0],
+                            'bSortable': true,
+                            'mData': "name",
+                            "width": "20%"
+                        },
+                        {
+                            'aTargets': [0],
+                            'bSortable': true,
+                            'mData': "direction",
+                            "width": "20%"
+                        },
+                        {
+                            'aTargets': [0],
+                            'bSortable': true,
+                            'mData': "phone",
+                            "width": "20%"
+                        },
+                        {
+                            'aTargets': [0],
+                            'bSortable': true,
+                            'mData': "educationLevelID",
+                            "width": "20%"
+                        },
+                        {
+                            'aTargets': [0],
+                            'bSortable': true,
+                            'mData': "director",
+                            "width": "20%"
+                        },
+                        {
+                            "mRender": function (param, type, full) {
+                                return "<center><a href='javascript:Editar()' class='btn btn-warning' role='button' aria-pressed='true' id='Editar' alt='Editar'><i class='fa fa-pencil-square-o'></i></a>" +
+                                    "&nbsp;&nbsp;</center>";
+                            }
+                        }
+                    ]
+                });
+
+                table.on('click', '#Editar', function () {
+                    var idtr = table.row($(this).parents('tr')).data();
+
+                    var numero = idtr.institutionID;
+
+                    //alert("ID: " + numero);
+
+
+                    localStorage.setItem("numero", numero);
+
+
+
+                        //window.location.href = "/Groups/CreateGroup?id=" + letra;
+
+                });
+
+
+            }
+
+            function Editar() {
+
+
+
+                var obteniendo_letra = localStorage.getItem("numero");
+                // $('#Nombre').val(obteniendo_letra);
+
+
+                alert("Editar: " + obteniendo_letra);
+
+                window.location.href = "/Institutions/CreateInstitution?id=" + obteniendo_letra;
+
+                localStorage.clear();
+
+
+
+            }
+
+
+
+
+
+            function Information(accion, error, msj) {
+                var oModel = {
+                    "Accion": accion,
+                    "Error": error,
+                    "Msj": msj
+                }
+                $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Binnacle/Info",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json"
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (jqXHR, textStatus, err) {
+                    console.log(textStatus);
+                });
+            }
+
+
+
+        </script>

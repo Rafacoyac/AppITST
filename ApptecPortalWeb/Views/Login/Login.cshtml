@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_Login.cshtml";
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" id="user" placeholder="Usuario" required>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" id="pass" name="password" data-toggle="password" placeholder="Contraseña" required>
+    </div>
+    <br>
+    <div class="form-group">
+        <button type="button" class="btn btn-primary submit-btn btn-block" onclick="logear()">Entrar</button>
+    </div>
+    <br>
+    <div class="text-block text-center my-3">
+        <span class="text-small font-weight-semibold">
+            ¿A&uacute;n no eres miembro?
+            @Html.ActionLink("Crear una cuenta aqui", "RegisterInstituto", "InstitutoRegister", new { area = "" }, new { @class = "nav-link" })
+        </span>
+    </div>
+}
+    <script src="~/Scripts/Platform/Login/Login.js"></script>
+

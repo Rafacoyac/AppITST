@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Clases";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Horario de clases</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" method="post">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Dia</label>
+                                                        <select class="form-control" id="diaClases" autocomplete="on" onchange="habilitar(this.value);" required>
+                                                            <option selected>Seleccionar</option>
+                                                            <option value='0'>Lunes</option>
+                                                            <option value='1'>Martes</option>
+                                                            <option value='2'>Miercoles</option>
+                                                            <option value='3'>Jueves</option>
+                                                            <option value='4'>Viernes</option>
+                                                            <option value='5'>Sabado</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Hora inicio</label>
+                                                        <input type="time" class="form-control" id="horaInClases" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Hora fin</label>
+                                                        <input type="time" class="form-control" id="horaFinClases" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Aula</label>
+                                                        <select class="form-control" id="aulaId" autocomplete="on" required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Materia</label>
+                                                        <select class="form-control" id="materiaId" autocomplete="on" required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Profesor</label>
+                                                        <select class="form-control" id="profesorId" autocomplete="on" required>
+                                                            <option selected>Seleccionar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" id="saveLesson" class="btn btn-success mr-2">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <label for="">Horarios registrados</label>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="forms-sample">
+                                            <table id="lesson" class="table table-striped table-bordered" style="width:90%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Materia</th>
+                                                        <th>Grado</th>
+                                                        <th>Aula</th>
+                                                        <th>Profesor</th>
+                                                        <th>Apellido Paterno</th>
+                                                        <th>Apellido Materno</th>
+                                                        <th>Hora inicio</th>
+                                                        <th>Hora fin</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="~/Scripts/Platform/Lesson/GetEmployerClassroomSubject.js"></script>
+        <script type="text/javascript" src="~/Scripts/Platform/Lesson/CreateLesson.js"></script>

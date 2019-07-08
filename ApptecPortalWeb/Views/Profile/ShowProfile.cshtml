@@ -1,0 +1,244 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Perfil";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Perfil</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="forms-sample">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Foto de perfil</label>
+                                                        <br>
+                                                        <center>
+                                                            <img id="ImgCarga" src="../../images/faces/face1.ico" alt="" width="50%" height="50%" />
+                                                        </center>
+                                                        <input id="inputFile" type="file" accept="image/*" onchange="CargarImagen()" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input type="text" class="form-control" id="nombreAlumno" placeholder="Nombre" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido paterno</label>
+                                                        <input type="text" class="form-control" id="apellidopAlumno" placeholder="Apellido paterno" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido materno</label>
+                                                        <input type="text" class="form-control" id="apellidomAlumno" placeholder="Apellido materno" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Usuario</label>
+                                                        <input type="text" class="form-control" id="usuarioAdmin" placeholder="Usuario" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Contraseña</label>
+                                                        <input type="password" class="form-control" id="contrasenaAdmin" placeholder="Contraseña" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Institución educativa</label>
+                                                        <input type="text" class="form-control" id="institucionAdmin" placeholder="Institución" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <!-- <button type="submit" class="btn btn-success mr-2">Guardar</button>-->
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="submit" class="btn btn-success mr-2">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="~/Scripts/Platform/image.js"></script>
+
+
+        <script>
+            var accion;
+            var error;
+            var msj;
+
+            $.ajax({
+
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Admin/Show",
+                "data": "",
+                "contentType": "application/json"
+
+
+            }).done(function (data) {
+
+
+                console.log(data);
+
+                for (var i = 0, len = data.length; i < len; i++) {
+
+                    $("#nombreAlumno").val(data[i].name);
+                    $("#apellidopAlumno").val(data[i].lastNameP);
+                    $("#apellidomAlumno").val(data[i].lastNameM);
+                    $("#usuarioAdmin").val(data[i].users);
+                    $("#contrasenaAdmin").val(data[i].pass);
+                    $("#institucionAdmin").val(data[i].institutionID);
+
+                    $("#ImgCarga").attr("src", "data:text/plain;base64," + data[i].photo);
+                }
+
+                error = "Ninguno";
+                msj = "Funcionamiento correcto";
+                accion = "Obtencion datos del perfil";
+                Information(accion, error, msj);
+
+            }).fail(function (jqXHR, textStatus, err) {
+
+                console.log(textStatus);
+                console.log(jqXHR);
+                console.log(err);
+
+                error = err + " " + textStatus + " " + jqXHR;
+                msj = "Administrador revisa el funcionamiento del portal";
+                accion = "Fallo obtencion de datos del perfil";
+                Information(accion, error, msj);
+            });
+        </script>
+
+
+        <script>
+
+            var accion;
+            var error;
+            var msj;
+            var nombre = $("#nombreAlumno").val();
+            var apep = $("#apellidopAlumno").val();
+            var apem = $("#apellidomAlumno").val();
+           
+
+            //$("#ImgCarga").attr("src", "data:text/plain;base64," + data[i].photo);
+
+            var oModel = {
+
+
+                "Name": nombre,
+                "LastNameP": apep,
+                "LastNameM": apem,
+                
+
+
+
+            }
+
+
+            $.ajax({
+
+                "async": true,
+                "crossDomain": true,
+                "cache": false,
+                "method": "POST",
+                "url": "http://localhost:59538/Api/Admin/UpdateRegister",
+                "data": JSON.stringify(oModel),
+                "contentType": "application/json"
+
+
+
+            }).done(function (response) {
+
+
+
+                console.log(response);
+
+
+
+                swal("Registro actualizado!", "La petición fue creada correctamente!", "success");
+                // $("#nombreGrupo").val("");
+                //$("#nombreGrupo").focus();
+
+                //window.location.href = "/Login/Login";
+                //return false;
+                error = "Ninguno";
+                msj = "Funcionamiento correcto";
+                accion = "Actualizacion del perfil de un usuario";
+                Information(accion, error, msj);
+
+
+            }).fail(function (jqXHR, textStatus, err) {
+
+                error = err + " " + textStatus + " " + jqXHR;
+                msj = "Administrador revisa el funcionamiento del portal";
+                accion = "Fallo actualización del perfil";
+                Information(accion, error, msj);
+
+                console.log(textStatus)
+
+
+            });
+
+
+            function Information(accion, error, msj) {
+                var oModel = {
+                    "Accion": accion,
+                    "Error": error,
+                    "Msj": msj
+                }
+                $.ajax({
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Binnacle/Info",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json"
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (jqXHR, textStatus, err) {
+                    console.log(textStatus);
+                });
+            }
+
+
+
+        </script>

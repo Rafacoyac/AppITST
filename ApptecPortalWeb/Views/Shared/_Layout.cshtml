@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/Content/vendors/css/vendor.bundle.addons.css">
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/vendors/iconfonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/js" href="https://code.jquery.com/jquery-3.3.1.js">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+
+</head>
+
+<body>
+
+    <!--Menú de la parte superior-->
+    <div class="container-scroller">
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div>
+                <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                    <a class="navbar-brand brand-logo" href="index.html">
+                        <img src="~/Content/images/logo.svg" alt="logo" />
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown d-none d-xl-inline-block">
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <span id="user" class="profile-text">Ernesto</span>
+                            <img class="img-xs rounded-circle" src="~/Content/images/faces/face1.ico" alt="Profile image" id="imagenperfil">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+
+                            @Html.ActionLink("Ver perfil", "ShowProfile", "Profile", new { area = "" }, new { @class = "dropdown-item" })
+
+
+                            @Html.ActionLink("Cerrar sesión", "Login", "Login", new { area = "" }, new { @class = "dropdown-item" })
+
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+
+        <!--Menú lateral-->
+        <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            <div class="user-wrapper">
+                                <div class="profile-image">
+                                    <img class="img-xs rounded-circle" id="images" src="~/Content/images/faces/face1.ico" alt="profile image">
+                                </div>
+                                <div class="text-wrapper">
+                                    <center>
+                                        <p class="profile-name" id="nombr">Ernesto Silverio Flores</p>
+                                        <div>
+                                            <small class="designation text-muted">Administrador</small>
+                                            <!--<span class="status-indicator online"></span>-->
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!--menu de administración-->
+
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Inicio", "Inicio", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic9" aria-expanded="false" aria-controls="ui-basic9">
+                            <i class="menu-icon fa fa-institution"></i>
+                            <span class="menu-title">Insituci&oacute;n</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic9">
+                            <ul class="nav flex-column sub-menu">
+
+
+                                <li class="nav-item">
+                                </li>
+
+
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar institución", "ShowInstitution", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic88" aria-expanded="false" aria-controls="ui-basic88">
+                            <i class="menu-icon fa fa-th-large"></i>
+                            <span class="menu-title">Grados</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic88">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar grado", "CreateDegree", "Degree", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar grados", "ShowDegree", "Degree", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic7" aria-expanded="false" aria-controls="ui-basic7">
+                            <i class="menu-icon fa fa-qrcode"></i>
+                            <span class="menu-title">Grupos</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic7">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar grupo", "CreateGroup", "Groups", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar grupos", "ShowGroup", "Groups", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
+                            <i class="menu-icon fa fa-archive"></i>
+                            <span class="menu-title">Aulas</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic1">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar aula", "CreateClassroom", "Classrooms", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar aulas", "ShowClassroom", "Classrooms", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="collapseTwo" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="menu-icon fa fa-briefcase"></i>
+                            <span class="menu-title">Carreras</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar carrera", "CreateCareer", "Careers", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar carreras", "ShowCareer", "Careers", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="collapseTwo" data-toggle="collapse" href="#ui-basic11" aria-expanded="false" aria-controls="ui-basic11">
+                            <i class="menu-icon fa fa-folder-open"></i>
+                            <span class="menu-title">Especialidades</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic11">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar especialidad", "CreateSpeciality", "Speciality", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar especialidades", "ShowSpeciality", "Speciality", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic3">
+                            <i class="menu-icon fa fa-book"></i>
+                            <span class="menu-title">Materias</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic3">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar materia", "CreateSubject", "Subjects", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar materias", "ShowSubject", "Subjects", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+                            <i class="menu-icon fa fa-group"></i>
+                            <span class="menu-title">Profesores</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic2">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar profesor", "CreateEmployer", "Employer", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar profesores", "ShowEmployer", "Employer", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#auth2" aria-expanded="false" aria-controls="auth2">
+                            <i class="menu-icon fa fa-user-circle"></i>
+                            <span class="menu-title">Alumnos</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="auth2">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar alumno", "CreateStudent", "Students", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar alumnos", "ShowStudent", "Students", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic99" aria-expanded="false" aria-controls="ui-basic99">
+                            <i class="menu-icon fa fa-pencil-square-o"></i>
+                            <span class="menu-title">Asiganci&oacute;n de Materias</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic99">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar materia y grado", "CreateClassDegree", "ClassDegree", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar materias y grados", "ShowClassDegree", "ClassDegree", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic4" aria-expanded="false" aria-controls="ui-basic4">
+                            <i class="menu-icon mdi mdi-bell"></i>
+                            <span class="menu-title">Clases</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic4">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Registrar clase", "CreateClase", "Clase", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Mostrar clases", "ShowClase", "Clase", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </nav>
+
+            @RenderBody()
+
+            <!--Footer del formulario-->
+            <div class="main-panel">
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+                            Copyright © 2018
+                            <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.
+                        </span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!--Scripts js del formulario-->
+    <script src="~/Content/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/Content/vendors/js/vendor.bundle.addons.js"></script>
+    <script src="~/Content/js/off-canvas.js"></script>
+    <script src="~/Content/js/misc.js"></script>
+    <script src="~/Content/js/dashboard.js"></script>
+    <script src="~/Content/js/datatableScroll.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!--<script src="~/Scripts/AdminRegister/AdminPhoto.js"></script>-->
+
+    <script>
+
+        $.ajax({
+
+            "async": true,
+            "crossDomain": true,
+            "cache": false,
+            "method": "POST",
+            "url": "http://localhost:59538/Api/Admin/Show",
+            "data": "",
+            "contentType": "application/json"
+
+        }).done(function (data) {
+
+
+            console.log(data);
+
+
+            for (var i = 0, len = data.length; i < len; i++) {
+
+
+                $("#images").attr("src", "data:text/plain;base64," + data[i].photo);
+                $("#imagenperfil").attr("src", "data:text/plain;base64," + data[i].photo);
+                console.log("usuario: " + data[i].users);
+                $("#user").text(data[i].users);
+                $("#nombr").text(data[i].name + " " + data[i].lastNameP + " " + data[i].lastNameM);
+
+
+            }
+
+
+
+        }).fail(function (jqXHR, textStatus, err) {
+
+            console.log(textStatus);
+            console.log(jqXHR);
+            console.log(err);
+
+
+        });
+    </script>
+
+
+</body>
+
+
+</html>

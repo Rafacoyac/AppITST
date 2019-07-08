@@ -1,0 +1,262 @@
+﻿@{
+    ViewBag.Title = "Institucion educativa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Instituci&oacute;n educativa</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("CreateInstitution", "Institutions", FormMethod.Post))
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nombre instituci&oacute;n</label>
+                                                        <input type="text" class="form-control" id="nombreInstitucion" placeholder="Nombre" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Direcci&oacute;n</label>
+                                                        <input type="text" class="form-control" id="direccionInstitucion" placeholder="Dirección" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Tel&eacute;fono</label>
+                                                        <input type="text" class="form-control" id="telefonoInstitucion" placeholder="Teléfono" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Nivel educativo</label>
+                                                        <select class="form-control" id="nivelEdInstitucion" required>
+                                                            <option selected>Seleccionar</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Director</label>
+                                                        <input type="text" class="form-control" id="directorInstitucion" placeholder="Nombre completo del director" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="button" onclick="actualizar()" class="btn btn-success mr-2">Guardar</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+
+
+                $(document).ready(function () {
+                    LoadEducationLevel();
+                });
+
+                var valor;
+
+                function LoadEducationLevel() {
+                    $.ajax({
+                        url: "http://localhost:59538/Api/Institution/ShowEducationLevel",
+                        method: "POST",
+                        dataType: "json",
+                        data: "{}",
+                        success: function (data) {
+
+                            for (var i = 0; i < data.length; i++) {
+                                console.log(data[i].id);
+                                $("#nivelEdInstitucion").append("<option value=" + data[i].id + ">" + data[i].nombre + "</option>");
+
+
+                            }
+
+
+                        },
+                        error: function (jqXHR, status, error) {
+                            alert('Disculpe, existió un problema');
+                        }
+                    });
+                }
+
+
+                var id = @Request.QueryString["id"];
+
+                alert(id);
+
+
+
+
+                var nombre = $("#nombreInstitucion").val();
+                var direccion = $("#direccionInstitucion").val();
+                var telefono = $("#telefonoInstitucion").val();
+                var nivel = $("#nivelEdInstitucion").val();
+                var director = $("#directorInstitucion").val();
+
+
+                var oModel = {
+
+
+                    "institutionID": id
+
+
+                }
+
+                $.ajax({
+
+                    "async": true,
+                    "crossDomain": true,
+                    "cache": false,
+                    "method": "POST",
+                    "url": "http://localhost:59538/Api/Institution/UpdateShow",
+                    "data": JSON.stringify(oModel),
+                    "contentType": "application/json"
+
+
+                }).done(function (data) {
+
+
+                    console.log(data);
+
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        localStorage.setItem("inst", data[i].institutionID)
+                        $("#nombreInstitucion").val(data[i].name);
+                        $("#direccionInstitucion").val(data[i].direction);
+                        $("#telefonoInstitucion").val(data[i].phone);
+                        $("#nivelEdInstitucion").val(data[i].educationLevelID);
+                        $("#directorInstitucion").val(data[i].director);
+
+                        //$("#ImgCarga").attr("src", "data:text/plain;base64," + data[i].photo);
+                    }
+
+
+                }).fail(function (jqXHR, textStatus, err) {
+
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                    console.log(err);
+
+
+                });
+
+
+                function actualizar() {
+                    var nombre = $("#nombreInstitucion").val();
+                    var direccion = $("#direccionInstitucion").val();
+                    var telefono = $("#telefonoInstitucion").val();
+                    var nivel = $("#nivelEdInstitucion").val();
+                    var director = $("#directorInstitucion").val();
+
+                    var ids = localStorage.getItem("inst");
+
+                    alert(ids+" "+nombre + "" + direccion + "" + telefono + "" + nivel + "" + director);
+
+                    if (nombre == "") {
+
+                        swal("Ingresa todos los campos.");
+                        $('#nombreInstitucion').focus();
+
+
+                    } else if (direccion == "") {
+
+                        swal("Ingresa todos los campos.");
+                        $('#direccionInstitucion').focus();
+
+                    } else if (telefono == "") {
+                        swal("Ingresa todos los campos.");
+                        $('#telefonoInstitucion').focus();
+
+                    } else if (nivel == "Seleccionar") {
+                        swal("Selecciona un nivel educativo.");
+                        $('#nivelEdInstitucion').focus();
+
+
+                    } else if (director == "") {
+                        swal("Ingresa todos los campos.");
+                        $('#directorInstitucion').focus();
+
+                    } else {
+
+
+                        var oModel = {
+
+                            "institutionID" : ids,
+                            "Name": nombre,
+                            "Direction": direccion,
+                            "Phone": telefono,
+                            "EducationLevelID": nivel,
+                            "Logo": "",
+                            "Director": director
+
+                        }
+
+
+                        $.ajax({
+
+                            "async": true,
+                            "crossDomain": true,
+                            "cache": false,
+                            "method": "POST",
+                            "url": "http://localhost:59538/Api/Institution/UpdateRegister",
+                            "data": JSON.stringify(oModel),
+                            "contentType": "application/json"
+
+
+                        }).done(function (data) {
+
+
+                            //alert("" + data);
+
+
+                            swal("Registro actualizado!", "La petición fue creada correctamente!", "success");
+                            // $("#nombreGrupo").val("");
+                            //$("#nombreGrupo").focus();
+                            window.location.href = "/Institutions/ShowInstitution";
+                            return false;
+
+
+                        }).fail(function (jqXHR, textStatus, err) {
+
+                            console.log(textStatus)
+
+
+
+                        });
+                    }
+                }
+
+        </script>
+
+

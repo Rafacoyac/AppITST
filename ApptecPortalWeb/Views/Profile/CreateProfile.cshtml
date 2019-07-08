@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Perfil";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Perfil</h4>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="forms-sample">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Foto de perfil</label>
+                                                        <br>
+                                                        <center>
+                                                            <img id="ImgCarga" src="../../images/faces/face1.ico" alt="" width="50%" height="50%" />
+                                                        </center>
+                                                        <input id="inputFile" type="file" accept="image/*" onchange="CargarImagen()" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input type="text" class="form-control" id="nombreAlumno" placeholder="Nombre" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido paterno</label>
+                                                        <input type="text" class="form-control" id="apellidopAlumno" placeholder="Apellido paterno" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido materno</label>
+                                                        <input type="text" class="form-control" id="apellidomAlumno" placeholder="Apellido materno" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Usuario</label>
+                                                        <input type="text" class="form-control" id="usuarioAdmin" placeholder="Usuario" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Contraseña</label>
+                                                        <input type="password" class="form-control" id="contrasenaAdmin" placeholder="Contraseña" value="" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Institución educativa</label>
+                                                        <input type="text" class="form-control" id="institucionAdmin" placeholder="Institución" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <!-- <button type="submit" class="btn btn-success mr-2">Guardar</button>-->
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <br><br>
+                                                    <button type="submit" onclick="Actualizar()" class="btn btn-success mr-2">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="~/Scripts/Platform/Profile/image.js"></script>
+        <script src="~/Scripts/Platform/Profile/UpdateProfile.js"></script>
+        <script src="~/Scripts/Platform/Profile/MostrarProfile.js"></script>
+        <script src="~/Scripts/Platform/Profile/GetInstitution.js"></script>
+
+
+
+
